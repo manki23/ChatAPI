@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property $id int
  * @property $text string
- * @property $created_at string
- * @property $updated_at string
+ * @property $created_at datetime
+ * @property $updated_at datetime
  */
 class Message extends Model
 {

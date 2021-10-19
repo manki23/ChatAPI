@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Message;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 /** @mixin Message */
 class MessageResource extends JsonResource
