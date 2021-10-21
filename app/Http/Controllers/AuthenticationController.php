@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): array
     {
         $attr = $request->validated();
 
@@ -22,17 +22,18 @@ class AuthenticationController extends Controller
         ];
     }
 
-    // this method signs out users by removing tokens
-    public function logout()
+    public function logout(): array
     {
-        auth()->user()->tokens()->delete();
+        auth()->user()
+            ->tokens()
+            ->delete();
 
         return [
             'message' => 'Tokens Revoked'
         ];
     }
 
-    public function me()
+    public function me(): UserResource
     {
         return UserResource::make(\auth()->user());
     }

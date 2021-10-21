@@ -15,20 +15,20 @@ class MessageObserver
         $smsText = substr($message->text, 0, 122);
 
         try {
-            $account_sid = getenv("TWILIO_SID");
-            $auth_token = getenv("TWILIO_TOKEN");
-            $twilio_number = getenv("TWILIO_FROM");
+            $accountSid = getenv("TWILIO_SID");
+            $authToken = getenv("TWILIO_TOKEN");
+            $senderNumber = getenv("TWILIO_FROM");
 
-            $client = new Client($account_sid, $auth_token);
+            $client = new Client($accountSid, $authToken);
             $client->messages->create(
                 $receiverNumber,
                 [
-                    'from' => $twilio_number,
+                    'from' => $senderNumber,
                     'body' => $smsText
                 ]
             );
         } catch (Exception $e) {
-            dump("Error: " . $e->getMessage());
+//            dump("Error: " . $e->getMessage());
         }
     }
 }

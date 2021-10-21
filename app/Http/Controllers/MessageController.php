@@ -17,7 +17,7 @@ class MessageController extends Controller
         return MessageResource::collection($messages);
     }
 
-    public function store(MessageStoreRequest $request)
+    public function store(MessageStoreRequest $request): MessageResource
     {
         $params = $request->validated();
         $message = Message::create($params);
@@ -25,7 +25,7 @@ class MessageController extends Controller
         return MessageResource::make($message);
     }
 
-    public function show(Message $message)
+    public function show(Message $message): MessageResource
     {
         return MessageResource::make($message);
     }
