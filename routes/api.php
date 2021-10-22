@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/users', [UserController::class, 'create']);
+Route::post('/login', [AuthenticationController::class, 'login']);
+
+Route::group(
+    ['middleware' => ['auth:sanctum']],
+    function () {
+        Route::post('/logout', [AuthenticationController::class, 'logout']);
+        Route::get('/me', [AuthenticationController::class, 'me']);
+    }
+);
+
+
+Route::prefix('messages')->group(
+    function () {
+        Route::middleware('auth:sanctum')->group(
+            function () {
+                Route::get('/', [MessageController::class, 'index'])->middleware('can:viewAny,App\Models\Message');
+                Route::get('/{message}', [MessageController::class, 'show'])->middleware('can:view,message');
+                Route::delete('/{message}', [MessageController::class, 'destroy'])->middleware('can:delete,message');
+            }
+        );
+
+        Route::post('/', [MessageController::class, 'store']);
+    }
+);
